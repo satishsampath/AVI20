@@ -21,11 +21,13 @@ public:
 
 std::string PrintRiff( const std::string& filename )
 {
+  /*
    std::ifstream f( filename.c_str(), std::ios::in|std::ios::binary );
    Read::Stream stream( &f );
    PrintRIFF pr;
    pr.Parse( stream );
    return pr.ss.str();
+   */
 }
 
 

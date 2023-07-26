@@ -15,7 +15,7 @@ public:
    enum Type { VIDEO, AUDIO, INVALID };
 
 public:
-   MediaStreamWriterImpl( const BITMAPINFOHEADER& bih, int FPS, Stream* stream, int streamIndex, IMediaStreamWriterParent* parent );
+   MediaStreamWriterImpl( const BITMAPINFOHEADER& bih, int FPS, int FPSScale, Stream* stream, int streamIndex, IMediaStreamWriterParent* parent);
    MediaStreamWriterImpl( const WaveFormatEx& wfx, Stream* stream, int streamIndex, IMediaStreamWriterParent* parent );
    bool IsVideo() const { return _Type == VIDEO; }
    bool IsAudio() const { return _Type == AUDIO; }
@@ -35,6 +35,7 @@ private:
    WaveFormatEx              _Audio;
    BITMAPINFOHEADER          _Video;
    int                       _VideoFPS;
+   int                       _VideoFPSScale;
    Stream*                   _Stream; // does NOT own
    int                       _StreamIndex;
    int                       _NumEntriesLeftInStdIndex; // type 2 standard index

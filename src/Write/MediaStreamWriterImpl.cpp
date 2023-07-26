@@ -9,10 +9,11 @@
 NAMESPACE_AVI20_WRITE_BEGIN
 
 
-MediaStreamWriterImpl::MediaStreamWriterImpl( const BITMAPINFOHEADER& bih, int FPS, Stream* stream, int streamIndex, IMediaStreamWriterParent* parent )
+MediaStreamWriterImpl::MediaStreamWriterImpl( const BITMAPINFOHEADER& bih, int FPS, int FPSScale, Stream* stream, int streamIndex, IMediaStreamWriterParent* parent )
    : _Type(VIDEO)
    , _Video(bih)
    , _VideoFPS(FPS)
+   , _VideoFPSScale(FPSScale)
    , _Stream(stream)
    , _StreamIndex(streamIndex)
    , _NumEntriesLeftInStdIndex(0)
@@ -38,7 +39,7 @@ MediaStreamHeader MediaStreamWriterImpl::VideoStreamHeader()
    MediaStreamHeader hdr;
    hdr.fccType    = streamtypeVIDEO;
    hdr.fccHandler = _Video.biCompression;
-   hdr.dwScale    = 1;
+   hdr.dwScale    = _VideoFPSScale;
    hdr.dwRate     = _VideoFPS;
    hdr.dwLength   = 0; // in first AVI section
    hdr.dwSuggestedBufferSize = 0;
@@ -79,7 +80,7 @@ void MediaStreamWriterImpl::WriteFrame( const uint8_t* data, const uint32_t len,
 
    RiffStream riff( *_Stream );
    riff.PushFixedSize( fcc( isKeyframe ), len );
-   _Stream->Write( data, len );
+   _Stream->WriteFrame(IsAudio(), data, len);
    riff.PopFixedSize();
    riff.PadTo( 512 ); // imitate DirectShow
    _NumEntriesLeftInStdIndex--;

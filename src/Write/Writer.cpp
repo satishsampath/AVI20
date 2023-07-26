@@ -36,7 +36,7 @@ public:
       _MediaStreams.clear();
    }
 
-   MediaStreamWriter AddMediaStream( int width, int height, int BPP, FOURCC codec, DWORD imageSize, int FPS )
+   MediaStreamWriter AddMediaStream( int width, int height, int BPP, FOURCC codec, DWORD imageSize, int FPS, int FPSScale )
    {
       BITMAPINFOHEADER bih;
       bih.biWidth       = width;
@@ -45,12 +45,12 @@ public:
       bih.biBitCount    = BPP;
       bih.biCompression = codec;
       bih.biSizeImage   = imageSize;
-      return AddMediaStream( bih, FPS );
+      return AddMediaStream( bih, FPS, FPSScale );
    }
-   MediaStreamWriter AddMediaStream( const BITMAPINFOHEADER& bih, int FPS )
+   MediaStreamWriter AddMediaStream( const BITMAPINFOHEADER& bih, int FPS, int FPSScale )
    {
       assert( !_Started );
-      MediaStreamWriterImpl* mediaStream = new MediaStreamWriterImpl( bih, FPS, _Stream, NumMediaStreams(), this );
+      MediaStreamWriterImpl* mediaStream = new MediaStreamWriterImpl( bih, FPS, FPSScale, _Stream, NumMediaStreams(), this );
       _MediaStreams.push_back( mediaStream );
       return mediaStream;
    }
@@ -212,8 +212,8 @@ Writer::~Writer()
 }
 
 
-MediaStreamWriter Writer::AddMediaStream( int width, int height, int BPP, FOURCC codec, DWORD imageSize, int FPS ) { return _Impl->AddMediaStream( width, height, BPP, codec, imageSize, FPS ); }
-MediaStreamWriter Writer::AddMediaStream( const BITMAPINFOHEADER& bih, int FPS ) { return _Impl->AddMediaStream( bih, FPS ); }
+MediaStreamWriter Writer::AddMediaStream( int width, int height, int BPP, FOURCC codec, DWORD imageSize, int FPS, int FPSScale ) { return _Impl->AddMediaStream( width, height, BPP, codec, imageSize, FPS, FPSScale ); }
+MediaStreamWriter Writer::AddMediaStream( const BITMAPINFOHEADER& bih, int FPS, int FPSScale ) { return _Impl->AddMediaStream( bih, FPS, FPSScale ); }
 MediaStreamWriter Writer::AddMediaStream( const WaveFormatEx& wfx ) { return _Impl->AddMediaStream( wfx ); }
 
 int Writer::NumMediaStreams() const { return _Impl->NumMediaStreams(); }

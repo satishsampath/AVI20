@@ -198,6 +198,7 @@ void FillOutAVIIndex( Write::Stream& stream, const Read::FillAVIIndexInfo& info 
 
 void FillOutAVIIndex( const std::string& filename )
 {
+  /*
    Read::FillAVIIndexInfo info;
    info.InitFrom( filename );
 
@@ -206,6 +207,7 @@ void FillOutAVIIndex( const std::string& filename )
       Stream stream( &f );
       FillOutAVIIndex( stream, info );
    }
+   */
 }
 
 void FillOutAVIIndex( Write::Stream& stream )

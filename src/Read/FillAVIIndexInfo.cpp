@@ -150,10 +150,12 @@ void FillAVIIndexInfo::InitFrom( IStream& stream )
 
 void FillAVIIndexInfo::InitFrom( const std::string& filename )
 {
+  /*
    std::ifstream f( filename.c_str(), std::ios::in|std::ios::binary );
    assert( f );
    Stream stream( &f );
    InitFrom( stream );
+   */
 }
 
 

@@ -24,8 +24,8 @@ public:
    AVI20_API virtual ~Writer();
 
 public:
-   MediaStreamWriter AddMediaStream( int width, int height, int BPP, FOURCC codec, DWORD imageSize, int FPS );
-   MediaStreamWriter AddMediaStream( const BITMAPINFOHEADER& bih, int FPS );
+   MediaStreamWriter AddMediaStream( int width, int height, int BPP, FOURCC codec, DWORD imageSize, int FPS, int FPSScale);
+   MediaStreamWriter AddMediaStream( const BITMAPINFOHEADER& bih, int FPS, int FPSScale);
    MediaStreamWriter AddMediaStream( const WaveFormatEx& wfx );
 
    int NumMediaStreams() const;

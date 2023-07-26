@@ -2,7 +2,7 @@
 
 #include <AVI20/AVI20Types.h>
 #include <AVI20/Read/IStream.h>
-
+#include <AVI20/AviFileWrapper.h>
 #include <istream>
 
 NAMESPACE_AVI20_WRITE_BEGIN
@@ -14,7 +14,7 @@ NAMESPACE_AVI20_READ_BEGIN
 class AVI20_API Stream : public IStream
 {
 public:
-   Stream( std::istream* file = NULL ) : _File( file ), /*_Stream(nullptr),*/ _CachedSize( -1 )/*, _CachedPos( 0ULL)*/ {}
+   Stream(AviFileWrapper* file = NULL) : _File(file), _CachedSize(-1) {}
    Stream( Write::Stream& stream );
 
    bool IsNULL() const override;
@@ -36,7 +36,7 @@ private:
       _File->read( (char *)&t, sizeof( T ) );
       return t;
    }
-   std::istream* _File; // doesn't own
+   AviFileWrapper* _File; // doesn't own
    int64_t       _CachedSize;
 };
 
